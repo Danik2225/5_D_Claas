@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5 «Д» Класс | Школа № 147</title>
+    <title>5 «Д» Класс | Средняя Школа № 147</title>
     <!-- Favicon -->
     <link rel="icon" href="image.png" type="image/png">
     
@@ -37,7 +37,7 @@
     </script>
     <style>
         .glass {
-            background: rgba(30, 41, 59, 0.75);
+            background: rgba(30, 41, 59, 0.8);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -58,6 +58,71 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #22c55e;
         }
+
+        /* Fixed Chess Board & Piece Styling */
+        .chess-wrapper {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            background: #1e293b;
+            padding: 10px;
+            border-radius: 16px;
+            border: 2px solid #334155;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+        .chess-board {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            aspect-ratio: 1 / 1;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #475569;
+        }
+        .chess-square {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+        .chess-square.light {
+            background-color: #cbd5e1;
+        }
+        .chess-square.dark {
+            background-color: #475569;
+        }
+        .chess-square.selected {
+            background-color: #f59e0b !important;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        .chess-square.valid-move::after {
+            content: '';
+            width: 16px;
+            height: 16px;
+            background-color: rgba(34, 197, 94, 0.85);
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+        }
+
+        /* Fixed Piece Colors */
+        .piece-white {
+            color: #ffffff !important;
+            filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.9)) drop-shadow(0px 0px 1px #000);
+            font-size: 2.3rem;
+            line-height: 1;
+            font-weight: bold;
+        }
+        .piece-black {
+            color: #090d16 !important;
+            filter: drop-shadow(0px 0px 2px rgba(255,255,255,0.8));
+            font-size: 2.3rem;
+            line-height: 1;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body class="bg-brand-dark text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
@@ -67,20 +132,19 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center gap-3">
-                    <!-- Логотип в шапке -->
                     <img src="image.png" alt="5Д Лого" class="w-10 h-10 rounded-full object-cover border border-emerald-400/50 shadow-md">
                     <div>
                         <span class="font-bold text-lg tracking-wide block leading-none">5 «Д» Класс</span>
-                        <span class="text-xs text-slate-400">Школа № 147</span>
+                        <span class="text-xs text-emerald-400 font-medium">Средняя Школа № 147</span>
                     </div>
                 </div>
 
                 <!-- Desktop Nav -->
                 <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
-                    <a href="#teachers" class="hover:text-brand-500 transition-colors">Учителя</a>
+                    <a href="#teachers" class="hover:text-brand-500 transition-colors">Предметы & Игры</a>
                     <a href="#students" class="hover:text-brand-500 transition-colors">Ученики</a>
                     <a href="#schedule" class="hover:text-brand-500 transition-colors">Расписание</a>
-                    <a href="#quiz" class="hover:text-brand-500 transition-colors">Квиз</a>
+                    <a href="#quiz" class="hover:text-brand-500 transition-colors">Квиз 5 Класса</a>
                     <a href="https://chat.whatsapp.com/FywHUYL2ghiAnx6uGqtYPw?mode=gi_t" target="_blank" class="bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-xl transition-all shadow-md flex items-center gap-2">
                         <i class="fa-brands fa-whatsapp text-lg"></i>
                         <span>Наш Чат</span>
@@ -96,39 +160,39 @@
 
         <!-- Mobile Nav -->
         <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-4 space-y-2">
-            <a href="#teachers" class="block py-2 text-slate-300 hover:text-brand-500">Учителя</a>
+            <a href="#teachers" class="block py-2 text-slate-300 hover:text-brand-500">Предметы & Игры</a>
             <a href="#students" class="block py-2 text-slate-300 hover:text-brand-500">Ученики</a>
             <a href="#schedule" class="block py-2 text-slate-300 hover:text-brand-500">Расписание</a>
-            <a href="#quiz" class="block py-2 text-slate-300 hover:text-brand-500">Квиз</a>
+            <a href="#quiz" class="block py-2 text-slate-300 hover:text-brand-500">Квиз 5 Класса</a>
             <a href="https://chat.whatsapp.com/FywHUYL2ghiAnx6uGqtYPw?mode=gi_t" target="_blank" class="block w-full text-center bg-brand-600 text-white py-2 rounded-lg font-medium mt-2">
                 <i class="fa-brands fa-whatsapp mr-2"></i>Перейти в WhatsApp
             </a>
         </div>
     </nav>
 
-    <!-- Hero Banner -->
+    <!-- Hero Banner (5th Grade Theme) -->
     <header class="relative overflow-hidden py-16 lg:py-24 border-b border-slate-800">
         <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#22c55e_1px,transparent_1px)] [background-size:16px_16px]"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 <div class="lg:col-span-7 space-y-6">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-500 text-xs font-semibold">
-                        <i class="fa-solid fa-graduation-cap"></i> Классный руководитель: Ынкер Хачикян
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-400 text-xs font-semibold">
+                        <i class="fa-solid fa-school"></i> Мы в средней школе! — 5 «Д» Класс
                     </div>
                     <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight">
-                        Официальный сайт <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-emerald-300">5 «Д» Класса</span>
+                        Добро пожаловать в <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 via-emerald-400 to-teal-300">5 «Д» Класс!</span>
                     </h1>
-                    <p class="text-slate-400 text-lg sm:text-xl leading-relaxed">
-                        Приветствуем на портале 5 «Д» класса школы № 147! Здесь собрана вся информация об уроках, учителях, учениках и жизни нашего класса.
+                    <p class="text-slate-300 text-lg sm:text-xl leading-relaxed">
+                        Портал учащихся 5 «Д» класса школы № 147. В пятом классе нас ждут новые предметы, кабинеты и интересные уроки! Нажимайте на карточки учителей, чтобы сыграть в развивающие мини-игры.
                     </p>
 
                     <div class="flex flex-wrap gap-4 pt-2">
                         <a href="https://chat.whatsapp.com/FywHUYL2ghiAnx6uGqtYPw?mode=gi_t" target="_blank" class="bg-gradient-to-r from-brand-600 to-emerald-600 hover:from-brand-500 hover:to-emerald-500 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg hover:shadow-brand-500/25 transition-all flex items-center gap-3">
                             <i class="fa-brands fa-whatsapp text-2xl"></i>
-                            <span>Войти в Чат WhatsApp</span>
+                            <span>Классный Чат WhatsApp</span>
                         </a>
                         <a href="#teachers" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold px-6 py-3.5 rounded-xl transition-all">
-                            Наши Учителя
+                            Учителя и Игры
                         </a>
                     </div>
                 </div>
@@ -136,25 +200,24 @@
                 <!-- Hero Card -->
                 <div class="lg:col-span-5 flex justify-center">
                     <div class="w-full max-w-sm glass rounded-2xl p-6 border border-slate-700 text-center relative glow-hover transition-all">
-                        <!-- Иконка класса из предоставленного изображения -->
-                        <div class="w-28 h-28 mx-auto mb-4 rounded-2xl overflow-hidden border-2 border-brand-500 p-1 bg-slate-800 shadow-lg shadow-brand-500/10">
+                        <div class="w-28 h-28 mx-auto mb-4 rounded-2xl overflow-hidden border-2 border-brand-500 p-1 bg-slate-800 shadow-lg shadow-brand-500/20">
                             <img src="image.png" alt="5 «Д» Класс" class="w-full h-full object-cover rounded-xl">
                         </div>
                         <h3 class="text-xl font-bold text-white mb-1">5 «Д» Класс</h3>
-                        <p class="text-xs text-slate-400 mb-4">Классный руководитель: Ынкер Хачикян</p>
+                        <p class="text-xs text-brand-400 font-medium mb-4">Классные руководитель:Ынкер Хачикян</p>
 
-                        <div class="bg-slate-900/80 rounded-xl p-3 text-xs text-left text-slate-300 space-y-2 border border-slate-800">
+                        <div class="bg-slate-900/90 rounded-xl p-3.5 text-xs text-left text-slate-300 space-y-2 border border-slate-800">
                             <div class="flex items-center justify-between">
-                                <span class="text-slate-500">Регистрация РКН:</span>
-                                <span class="font-mono text-emerald-400">62525272</span>
+                                <span class="text-slate-400">Уровень:</span>
+                                <span class="font-semibold text-emerald-400">5-й класс (Средняя школа)</span>
                             </div>
                             <div class="flex items-center justify-between">
-                                <span class="text-slate-500">Участников в чате:</span>
-                                <span class="font-semibold text-slate-200">18 чел.</span>
+                                <span class="text-slate-400">Регистрация РКН:</span>
+                                <span class="font-mono text-slate-300">62525272</span>
                             </div>
                             <div class="flex items-center justify-between">
-                                <span class="text-slate-500">Всего в списке:</span>
-                                <span class="font-semibold text-brand-500">25+ учеников</span>
+                                <span class="text-slate-400">Интерактивные игры:</span>
+                                <span class="font-semibold text-brand-400">Шахматы, Квизы, Тактика</span>
                             </div>
                         </div>
                     </div>
@@ -166,75 +229,100 @@
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
 
-        <!-- Teachers Section -->
+        <!-- Teachers & Games Section -->
         <section id="teachers" class="scroll-mt-20">
             <div class="text-center max-w-3xl mx-auto mb-12">
-                <h2 class="text-3xl font-extrabold text-white">Наши Учителя</h2>
-                <p class="text-slate-400 mt-2">Преподавательский состав 5 «Д» класса</p>
+                <span class="text-xs font-bold uppercase tracking-wider text-brand-500 bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">Предметы 5 Класса</span>
+                <h2 class="text-3xl font-extrabold text-white mt-3">Учителя и Интерактивные Игры</h2>
+                <p class="text-slate-400 mt-2">Кликните по карточке любого учителя, чтобы открыть интерактивное задание!</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Class Teacher -->
-                <div class="glass p-6 rounded-2xl border-2 border-brand-500/50 relative overflow-hidden">
+                <!-- Class Teacher -> Chess Game -->
+                <div onclick="openModal('chess-modal')" class="glass p-6 rounded-2xl border-2 border-brand-500/50 relative overflow-hidden cursor-pointer hover:scale-[1.02] transition-all group">
                     <div class="absolute top-0 right-0 bg-brand-500 text-slate-950 font-bold text-[10px] px-3 py-1 rounded-bl-xl uppercase tracking-wider">
                         Классный Руководитель
                     </div>
-                    <div class="w-14 h-14 rounded-2xl bg-brand-500/20 text-brand-400 flex items-center justify-center text-2xl mb-4">
-                        <i class="fa-solid fa-user-tie"></i>
+                    <div class="w-14 h-14 rounded-2xl bg-brand-500/20 text-brand-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-chess-king"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-1">Ынкер Хачикян</h3>
-                    <p class="text-xs text-brand-400 font-medium mb-3">Классный руководитель 5 «Д»</p>
-                    <p class="text-sm text-slate-400">Руководит нашим классом, помогает в учебе и организует школьную жизнь.</p>
+                    <h3 class="text-xl font-bold text-white mb-1">Нвард Геворковна / Ынкер Хачикян</h3>
+                    <p class="text-xs text-brand-400 font-medium mb-3">Классные руководители 5 «Д»</p>
+                    <p class="text-sm text-slate-400 mb-4">Руководят нашим 5 «Д» классом, помогают адаптироваться в средней школе и организуют наши успехи.</p>
+                    <button class="w-full bg-brand-600/30 hover:bg-brand-600 text-brand-300 hover:text-white border border-brand-500/40 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition-all">
+                        <i class="fa-solid fa-chess-board text-sm"></i>
+                        <span>Сыграть в Шахматы с Ботом</span>
+                    </button>
                 </div>
 
-                <!-- Math Teacher -->
-                <div class="glass p-6 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all">
-                    <div class="w-14 h-14 rounded-2xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-2xl mb-4">
+                <!-- Math Teacher -> Math Riddles -->
+                <div onclick="openModal('math-modal')" class="glass p-6 rounded-2xl border border-slate-800 hover:border-blue-500/50 cursor-pointer hover:scale-[1.02] transition-all group">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-calculator"></i>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-1">Анна Львовна</h3>
-                    <p class="text-xs text-blue-400 font-medium mb-3">Математика</p>
-                    <p class="text-sm text-slate-400">Учит нас правильно считать, решать уравнения и понимать логику чисел.</p>
+                    <p class="text-xs text-blue-400 font-medium mb-3">Математика (5 класс)</p>
+                    <p class="text-sm text-slate-400 mb-4">Обучает нас математике 5 класса, дробям, уравнениям и логическому мышлению.</p>
+                    <button class="w-full bg-blue-600/30 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/40 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition-all">
+                        <i class="fa-solid fa-puzzle-piece text-sm"></i>
+                        <span>Математические Загадки</span>
+                    </button>
                 </div>
 
                 <!-- Russian & Lit Teacher -->
-                <div class="glass p-6 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all">
-                    <div class="w-14 h-14 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-2xl mb-4">
+                <div onclick="openModal('russian-modal')" class="glass p-6 rounded-2xl border border-slate-800 hover:border-purple-500/50 cursor-pointer hover:scale-[1.02] transition-all group">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-book-bookmark"></i>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-1">Герсилия Александровна</h3>
                     <p class="text-xs text-purple-400 font-medium mb-3">Русский язык и Литература</p>
-                    <p class="text-sm text-slate-400">Учит нас грамотному письму, правилам орфографии и чтению русской классики.</p>
+                    <p class="text-sm text-slate-400 mb-4">Учит писать грамотно, разбирать произведения и любить литературу 5 класса.</p>
+                    <button class="w-full bg-purple-600/30 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-500/40 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition-all">
+                        <i class="fa-solid fa-pen-nib text-sm"></i>
+                        <span>Квиз по Литературе</span>
+                    </button>
                 </div>
 
-                <!-- Armenian Teacher -->
-                <div class="glass p-6 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all">
-                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl mb-4">
+                <!-- Armenian Teacher -> Armenian Quiz -->
+                <div onclick="openModal('armenian-modal')" class="glass p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/50 cursor-pointer hover:scale-[1.02] transition-all group">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-book-open"></i>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-1">Учитель Нерсисян</h3>
                     <p class="text-xs text-emerald-400 font-medium mb-3">Армянский язык</p>
-                    <p class="text-sm text-slate-400">Преподает армянский язык, учит нас грамотности, чтению и родной речи.</p>
+                    <p class="text-sm text-slate-400 mb-4">Преподает армянский язык, учит грамматике, родному алфавиту и чтению.</p>
+                    <button class="w-full bg-emerald-600/30 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/40 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition-all">
+                        <i class="fa-solid fa-graduation-cap text-sm"></i>
+                        <span>Квиз по Армянскому</span>
+                    </button>
                 </div>
 
-                <!-- English Teachers -->
-                <div class="glass p-6 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all">
-                    <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl mb-4">
+                <!-- English Teachers -> Tactical English Arena -->
+                <div onclick="openModal('english-modal')" class="glass p-6 rounded-2xl border border-slate-800 hover:border-amber-500/50 cursor-pointer hover:scale-[1.02] transition-all group">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-language"></i>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-1">Miss Энн и Miss Mariam</h3>
                     <p class="text-xs text-amber-400 font-medium mb-3">Английский язык</p>
-                    <p class="text-sm text-slate-400">Преподают иностранный язык, помогают изучать грамматику и разговорную речь.</p>
+                    <p class="text-sm text-slate-400 mb-4">Учат разговорному английскому языку, словарному запасу и грамматике.</p>
+                    <button class="w-full bg-amber-600/30 hover:bg-amber-600 text-amber-300 hover:text-white border border-amber-500/40 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition-all">
+                        <i class="fa-solid fa-crosshairs text-sm"></i>
+                        <span>Тактика Английских Слов</span>
+                    </button>
                 </div>
 
-                <!-- PE Teacher -->
-                <div class="glass p-6 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all">
-                    <div class="w-14 h-14 rounded-2xl bg-red-500/20 text-red-400 flex items-center justify-center text-2xl mb-4">
+                <!-- PE Teacher -> Tactical Sports Strategy -->
+                <div onclick="openModal('pe-modal')" class="glass p-6 rounded-2xl border border-slate-800 hover:border-red-500/50 cursor-pointer hover:scale-[1.02] transition-all group">
+                    <div class="w-14 h-14 rounded-2xl bg-red-500/20 text-red-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-volleyball"></i>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-1">Татьяна Аркадьевна</h3>
                     <p class="text-xs text-red-400 font-medium mb-3">Физкультура</p>
-                    <p class="text-sm text-slate-400">Тренирует нашу выносливость, проводит спортивные игры и эстафеты.</p>
+                    <p class="text-sm text-slate-400 mb-4">Учит командной игре, физической подготовке и тактическим схемам на спортивной площадке.</p>
+                    <button class="w-full bg-red-600/30 hover:bg-red-600 text-red-300 hover:text-white border border-red-500/40 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition-all">
+                        <i class="fa-solid fa-shield-halved text-sm"></i>
+                        <span>Тактическая Стратегия Матча</span>
+                    </button>
                 </div>
             </div>
         </section>
@@ -243,8 +331,8 @@
         <section id="students" class="scroll-mt-20">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
                 <div>
-                    <h2 class="text-3xl font-extrabold text-white">Список Учеников</h2>
-                    <p class="text-slate-400 mt-1">Одноклассники 5 «Д» и участники WhatsApp группы</p>
+                    <h2 class="text-3xl font-extrabold text-white">Ученики 5 «Д» Класса</h2>
+                    <p class="text-slate-400 mt-1">Одноклассники и участники нашей дружной группы</p>
                 </div>
                 <!-- Search bar -->
                 <div class="relative w-full md:w-72">
@@ -261,8 +349,8 @@
         <!-- Schedule Section -->
         <section id="schedule" class="scroll-mt-20">
             <div class="text-center max-w-3xl mx-auto mb-8">
-                <h2 class="text-3xl font-extrabold text-white">Расписание Уроков</h2>
-                <p class="text-slate-400 mt-2">Точное расписание 5 «Д» класса по дням недели</p>
+                <h2 class="text-3xl font-extrabold text-white">Расписание Уроков 5 «Д»</h2>
+                <p class="text-slate-400 mt-2">Расписание занятий по дням недели для 5-го класса</p>
             </div>
 
             <!-- Days Switcher -->
@@ -284,7 +372,7 @@
             </div>
         </section>
 
-        <!-- Interactive Quiz -->
+        <!-- Interactive Main Quiz -->
         <section id="quiz" class="scroll-mt-20">
             <div class="glass max-w-3xl mx-auto rounded-3xl border border-slate-800 p-8 relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-32 h-32 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -295,7 +383,7 @@
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Викторина 5 «Д» Класса!</h2>
                     <p class="text-slate-400 text-sm max-w-md mx-auto">
-                        Проверь знания об учителях и одноклассниках нашего класса!
+                        Проверь знания про учителей и школьную жизнь в 5 классе!
                     </p>
                     <button id="start-quiz-btn" class="bg-brand-600 hover:bg-brand-500 text-white font-bold px-8 py-3 rounded-xl transition-all shadow-lg hover:shadow-brand-500/25">
                         Начать Квиз
@@ -321,10 +409,10 @@
 
                 <div id="quiz-result" class="hidden text-center space-y-4 py-4">
                     <div class="text-5xl">🏆</div>
-                    <h3 class="text-2xl font-bold text-white">Молодец!</h3>
+                    <h3 class="text-2xl font-bold text-white">Отличный результат!</h3>
                     <p id="quiz-final-score" class="text-slate-300">Ты отлично знаешь 5 «Д» класс!</p>
                     <button id="restart-quiz-btn" class="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-6 py-2.5 rounded-xl border border-slate-700 transition-all">
-                        Пройти еще раз
+                        Пройти ещё раз
                     </button>
                 </div>
             </div>
@@ -332,14 +420,194 @@
 
     </main>
 
+    <!-- FOOTER MODALS FOR TEACHER GAMES -->
+
+    <!-- 1. CHESS MODAL (Fixed Board & Rules) -->
+    <div id="chess-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden transition-all">
+        <div class="glass max-w-md w-full rounded-3xl border border-brand-500/40 p-6 relative flex flex-col items-center">
+            <button onclick="closeModal('chess-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4 w-full">
+                <div class="w-10 h-10 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center text-xl shrink-0">
+                    <i class="fa-solid fa-chess"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white leading-tight">Шахматы с Ботом</h3>
+                    <p class="text-xs text-brand-400">Классный руководитель: Нвард Геворковна / Ынкер Хачикян</p>
+                </div>
+            </div>
+
+            <div id="chess-status" class="mb-3 text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-emerald-400 text-center w-full">
+                Ваш ход! Вы играете Белыми (Белые фигуры снизу)
+            </div>
+
+            <!-- Chess Wrapper & Board -->
+            <div class="chess-wrapper">
+                <div id="chess-board" class="chess-board"></div>
+            </div>
+
+            <div class="flex gap-3 mt-5 w-full">
+                <button onclick="initChessGame()" class="flex-1 bg-brand-600 hover:bg-brand-500 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md">
+                    <i class="fa-solid fa-rotate-right mr-1"></i> Новая Игра
+                </button>
+                <button onclick="closeModal('chess-modal')" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2.5 rounded-xl text-xs transition-all border border-slate-700">
+                    Закрыть
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. MATH RIDDLES MODAL (Анна Львовна) -->
+    <div id="math-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden transition-all">
+        <div class="glass max-w-lg w-full rounded-3xl border border-blue-500/40 p-6 relative">
+            <button onclick="closeModal('math-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white leading-tight">Математика 5 Класса</h3>
+                    <p class="text-xs text-blue-400">Учитель: Анна Львовна</p>
+                </div>
+            </div>
+
+            <div id="math-game-body" class="space-y-4">
+                <div class="flex justify-between text-xs text-slate-400 font-semibold">
+                    <span id="math-step-text">Загадка 1 из 4</span>
+                    <span id="math-score-text">Очки: 0</span>
+                </div>
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                    <p id="math-riddle-question" class="text-sm font-medium text-slate-100 leading-relaxed"></p>
+                </div>
+                <div id="math-options" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. ARMENIAN QUIZ MODAL (Учитель Нерсисян) -->
+    <div id="armenian-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden transition-all">
+        <div class="glass max-w-lg w-full rounded-3xl border border-emerald-500/40 p-6 relative">
+            <button onclick="closeModal('armenian-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white leading-tight">Тест по Армянскому Языку</h3>
+                    <p class="text-xs text-emerald-400">Учитель: Преподаватель Нерсисян</p>
+                </div>
+            </div>
+
+            <div id="arm-game-body" class="space-y-4">
+                <div class="flex justify-between text-xs text-slate-400 font-semibold">
+                    <span id="arm-step-text">Вопрос 1 из 4</span>
+                    <span id="arm-score-text">Очки: 0</span>
+                </div>
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                    <p id="arm-question-text" class="text-sm font-bold text-slate-100"></p>
+                </div>
+                <div id="arm-options" class="space-y-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. ENGLISH TACTICAL ARENA MODAL -->
+    <div id="english-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden transition-all">
+        <div class="glass max-w-lg w-full rounded-3xl border border-amber-500/40 p-6 relative">
+            <button onclick="closeModal('english-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-crosshairs"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white leading-tight">Tactical English Arena</h3>
+                    <p class="text-xs text-amber-400">Учителя: Miss Энн & Miss Mariam</p>
+                </div>
+            </div>
+
+            <div id="eng-game-body" class="space-y-4">
+                <p class="text-xs text-slate-400">Расшифруйте слова на английском языке:</p>
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 text-center">
+                    <span id="eng-scrambled" class="text-2xl font-black tracking-widest text-amber-400 font-mono"></span>
+                    <p id="eng-hint" class="text-xs text-slate-400 mt-2 italic"></p>
+                </div>
+                <div id="eng-options" class="grid grid-cols-2 gap-2"></div>
+                <div id="eng-result" class="text-xs text-center font-bold text-emerald-400 min-h-[20px]"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. PE TACTICAL GAME MODAL -->
+    <div id="pe-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden transition-all">
+        <div class="glass max-w-lg w-full rounded-3xl border border-red-500/40 p-6 relative">
+            <button onclick="closeModal('pe-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white leading-tight">Тактика Спортивного Матча</h3>
+                    <p class="text-xs text-red-400">Учитель: Татьяна Аркадьевна</p>
+                </div>
+            </div>
+
+            <div class="bg-emerald-950/80 border-2 border-emerald-500/40 rounded-xl p-4 text-center relative overflow-hidden mb-4">
+                <div class="text-[10px] uppercase font-bold text-emerald-400 tracking-wider mb-2">Тактическая Схема Команды 5 «Д»</div>
+                <div class="flex justify-around items-center my-3 text-lg">
+                    <span title="Защитник" class="p-2 bg-emerald-800/80 rounded-full text-white">🛡️</span>
+                    <span title="Полузащитник" class="p-2 bg-emerald-800/80 rounded-full text-white">⚡</span>
+                    <span title="Нападающий" class="p-2 bg-emerald-800/80 rounded-full text-white">⚽</span>
+                </div>
+                <p id="pe-scenario-text" class="text-xs text-slate-200 font-medium"></p>
+            </div>
+
+            <div id="pe-tactical-options" class="space-y-2"></div>
+            <div id="pe-log" class="mt-3 p-2 bg-slate-900 text-xs text-center text-amber-400 font-mono rounded-lg hidden"></div>
+        </div>
+    </div>
+
+    <!-- 6. RUSSIAN LITERATURE MODAL -->
+    <div id="russian-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden transition-all">
+        <div class="glass max-w-lg w-full rounded-3xl border border-purple-500/40 p-6 relative">
+            <button onclick="closeModal('russian-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl">
+                    <i class="fa-solid fa-pen-nib"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white leading-tight">Литература 5 Класса</h3>
+                    <p class="text-xs text-purple-400">Учитель: Герсилия Александровна</p>
+                </div>
+            </div>
+
+            <div id="rus-game-body" class="space-y-4">
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                    <p id="rus-question" class="text-sm font-bold text-slate-100">Кто написал поэму «Руслан и Людмила»?</p>
+                </div>
+                <div id="rus-options" class="grid grid-cols-1 gap-2"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="border-t border-slate-800 bg-slate-950 py-8 text-xs text-slate-500">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-2">
                 <span class="font-bold text-slate-300">5 «Д» Класс</span>
-                <span>• Школа № 147</span>
+                <span>• Средняя Школа № 147</span>
             </div>
-            <p>© 2026 Классный сайт 5 «Д». Сообщество учеников.</p>
+            <p>© 2026 Сайт 5 «Д» класса. Сообщество учащихся.</p>
             <div>
                 <a href="https://chat.whatsapp.com/FywHUYL2ghiAnx6uGqtYPw?mode=gi_t" target="_blank" class="text-brand-500 hover:underline">
                     Группа в WhatsApp
@@ -350,44 +618,497 @@
 
     <!-- JavaScript Application Logic -->
     <script>
-        // Students List
+        // Modal Helper Functions
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+            if (id === 'chess-modal') initChessGame();
+            if (id === 'math-modal') startMathRiddles();
+            if (id === 'armenian-modal') startArmenianQuiz();
+            if (id === 'english-modal') startEnglishGame();
+            if (id === 'pe-modal') startPEGame();
+            if (id === 'russian-modal') startRussianQuiz();
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        /* ========================================================
+           1. CHESS ENGINE & BOARD LOGIC (FIXED SCHEME & COLORS)
+           ======================================================== */
+        const pieceSymbols = {
+            'r': '♜', 'n': '♞', 'b': '♝', 'q': '♛', 'k': '♚', 'p': '♟',
+            'R': '♜', 'N': '♞', 'B': '♝', 'Q': '♛', 'K': '♚', 'P': '♟'
+        };
+
+        let chessBoard = [];
+        let selectedSquare = null;
+        let validMoves = [];
+
+        function initChessGame() {
+            // Standard Initial Setup:
+            // Row 0 (Rank 8, Black): r, n, b, q, k, b, n, r
+            // Row 1 (Rank 7, Black Pawns)
+            // Row 6 (Rank 2, White Pawns)
+            // Row 7 (Rank 1, White): R, N, B, Q, K, B, N, R
+            chessBoard = [
+                ['r','n','b','q','k','b','n','r'],
+                ['p','p','p','p','p','p','p','p'],
+                ['','','','','','','',''],
+                ['','','','','','','',''],
+                ['','','','','','','',''],
+                ['','','','','','','',''],
+                ['P','P','P','P','P','P','P','P'],
+                ['R','N','B','Q','K','B','N','R']
+            ];
+            selectedSquare = null;
+            validMoves = [];
+            const statusEl = document.getElementById('chess-status');
+            if (statusEl) statusEl.innerText = 'Ваш ход! Вы играете Белыми (внизу)';
+            renderChessBoard();
+        }
+
+        function renderChessBoard() {
+            const boardEl = document.getElementById('chess-board');
+            if (!boardEl) return;
+            boardEl.innerHTML = '';
+
+            for (let r = 0; r < 8; r++) {
+                for (let c = 0; c < 8; c++) {
+                    const square = document.createElement('div');
+                    const isDark = (r + c) % 2 === 1;
+                    square.className = `chess-square ${isDark ? 'dark' : 'light'}`;
+
+                    if (selectedSquare && selectedSquare[0] === r && selectedSquare[1] === c) {
+                        square.classList.add('selected');
+                    }
+
+                    if (validMoves.some(m => m[0] === r && m[1] === c)) {
+                        square.classList.add('valid-move');
+                    }
+
+                    const piece = chessBoard[r][c];
+                    if (piece) {
+                        const isWhite = piece === piece.toUpperCase();
+                        const span = document.createElement('span');
+                        span.className = isWhite ? 'piece-white' : 'piece-black';
+                        span.innerText = pieceSymbols[piece] || '';
+                        square.appendChild(span);
+                    }
+
+                    square.onclick = () => handleSquareClick(r, c);
+                    boardEl.appendChild(square);
+                }
+            }
+        }
+
+        function handleSquareClick(r, c) {
+            const piece = chessBoard[r][c];
+
+            // Clicked on player's own white piece
+            if (piece && piece === piece.toUpperCase()) {
+                selectedSquare = [r, c];
+                validMoves = getValidMoves(r, c);
+                renderChessBoard();
+                return;
+            }
+
+            // Clicked on a target valid square
+            if (selectedSquare && validMoves.some(m => m[0] === r && m[1] === c)) {
+                // Execute White Move
+                chessBoard[r][c] = chessBoard[selectedSquare[0]][selectedSquare[1]];
+                chessBoard[selectedSquare[0]][selectedSquare[1]] = '';
+                selectedSquare = null;
+                validMoves = [];
+                renderChessBoard();
+
+                document.getElementById('chess-status').innerText = 'Бот размышляет...';
+                setTimeout(makeBotMove, 400);
+            }
+        }
+
+        // Complete Chess Rules Engine
+        function getValidMoves(r, c) {
+            const moves = [];
+            const piece = chessBoard[r][c];
+            if (!piece) return moves;
+
+            const isWhite = piece === piece.toUpperCase();
+            const type = piece.toLowerCase();
+
+            if (type === 'p') {
+                const dir = isWhite ? -1 : 1;
+                const startRow = isWhite ? 6 : 1;
+                // 1 step forward
+                if (r + dir >= 0 && r + dir < 8 && chessBoard[r + dir][c] === '') {
+                    moves.push([r + dir, c]);
+                    // 2 steps from initial rank
+                    if (r === startRow && chessBoard[r + 2 * dir][c] === '') {
+                        moves.push([r + 2 * dir, c]);
+                    }
+                }
+                // Captures
+                for (let dc of [-1, 1]) {
+                    const nr = r + dir, nc = c + dc;
+                    if (nr >= 0 && nr < 8 && nc >= 0 && nc < 8) {
+                        const target = chessBoard[nr][nc];
+                        if (target !== '' && (isWhite ? target === target.toLowerCase() : target === target.toUpperCase())) {
+                            moves.push([nr, nc]);
+                        }
+                    }
+                }
+            } else if (type === 'n') {
+                const offsets = [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
+                offsets.forEach(([dr, dc]) => {
+                    const nr = r + dr, nc = c + dc;
+                    if (nr >= 0 && nr < 8 && nc >= 0 && nc < 8) {
+                        const target = chessBoard[nr][nc];
+                        if (target === '' || (isWhite ? target === target.toLowerCase() : target === target.toUpperCase())) {
+                            moves.push([nr, nc]);
+                        }
+                    }
+                });
+            } else if (type === 'k') {
+                const offsets = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+                offsets.forEach(([dr, dc]) => {
+                    const nr = r + dr, nc = c + dc;
+                    if (nr >= 0 && nr < 8 && nc >= 0 && nc < 8) {
+                        const target = chessBoard[nr][nc];
+                        if (target === '' || (isWhite ? target === target.toLowerCase() : target === target.toUpperCase())) {
+                            moves.push([nr, nc]);
+                        }
+                    }
+                });
+            } else {
+                // Sliding pieces: R, B, Q
+                let dirs = [];
+                if (type === 'r' || type === 'q') dirs.push([-1,0],[1,0],[0,-1],[0,1]);
+                if (type === 'b' || type === 'q') dirs.push([-1,-1],[-1,1],[1,-1],[1,1]);
+
+                dirs.forEach(([dr, dc]) => {
+                    let step = 1;
+                    while (true) {
+                        const nr = r + dr * step;
+                        const nc = c + dc * step;
+                        if (nr < 0 || nr >= 8 || nc < 0 || nc >= 8) break;
+                        const target = chessBoard[nr][nc];
+                        if (target === '') {
+                            moves.push([nr, nc]);
+                        } else {
+                            if (isWhite ? target === target.toLowerCase() : target === target.toUpperCase()) {
+                                moves.push([nr, nc]);
+                            }
+                            break; // Ray blocked
+                        }
+                        step++;
+                    }
+                });
+            }
+
+            return moves;
+        }
+
+        function makeBotMove() {
+            const allBotMoves = [];
+            for (let r = 0; r < 8; r++) {
+                for (let c = 0; c < 8; c++) {
+                    const p = chessBoard[r][c];
+                    if (p && p === p.toLowerCase()) { // Black piece
+                        const moves = getValidMoves(r, c);
+                        moves.forEach(m => {
+                            allBotMoves.push({
+                                from: [r, c],
+                                to: m,
+                                target: chessBoard[m[0]][m[1]]
+                            });
+                        });
+                    }
+                }
+            }
+
+            if (allBotMoves.length === 0) {
+                document.getElementById('chess-status').innerText = '🏆 Победа! У бота нет ходов!';
+                return;
+            }
+
+            // Prioritize captures
+            allBotMoves.sort((a, b) => (b.target ? 10 : 0) - (a.target ? 10 : 0));
+            const move = allBotMoves[0];
+
+            chessBoard[move.to[0]][move.to[1]] = chessBoard[move.from[0]][move.from[1]];
+            chessBoard[move.from[0]][move.from[1]] = '';
+
+            renderChessBoard();
+            document.getElementById('chess-status').innerText = 'Ваш ход! Вы играете Белыми';
+        }
+
+        // 2. MATH RIDDLES (Анна Львовна)
+const mathQuestions = [
+    {
+        q: "Я задумал число, умножил его на 4, прибавил 12 и получил 48. Какое число я задумал?",
+        opts: ["8", "9", "10", "12"],
+        correct: 1 // 9
+    },
+    {
+        q: "Площадь квадратного участка равна 36 м². Чему равен его периметр?",
+        opts: ["24 м", "36 м", "12 м", "18 м"],
+        correct: 0 // 24 м (сторона = 6 м, 6 * 4 = 24)
+    },
+    {
+        q: "Поезд проехал 180 км за 3 часа с постоянной скоростью. С какой скоростью он ехал?",
+        opts: ["50 км/ч", "60 км/ч", "70 км/ч", "80 км/ч"],
+        correct: 1 // 60 км/ч
+    },
+    {
+        q: "Чему равно 3/5 от числа 50?",
+        opts: ["10", "20", "30", "40"],
+        correct: 2 // 30
+    }
+];
+        let mathStep = 0, mathScore = 0;
+
+        function startMathRiddles() {
+            mathStep = 0; mathScore = 0;
+            showMathRiddle();
+        }
+
+        function showMathRiddle() {
+            const q = mathQuestions[mathStep];
+            document.getElementById('math-step-text').innerText = `Загадка ${mathStep + 1} из ${mathQuestions.length}`;
+            document.getElementById('math-score-text').innerText = `Очки: ${mathScore}`;
+            document.getElementById('math-riddle-question').innerText = q.q;
+
+            const optsEl = document.getElementById('math-options');
+            optsEl.innerHTML = '';
+            q.opts.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-3 rounded-xl bg-slate-800 hover:bg-blue-600 border border-slate-700 text-xs font-semibold text-slate-200 transition-all text-left";
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    if (idx === q.correct) mathScore++;
+                    mathStep++;
+                    if (mathStep < mathQuestions.length) showMathRiddle();
+                    else {
+                        document.getElementById('math-game-body').innerHTML = `
+                            <div class="text-center py-6 space-y-3">
+                                <div class="text-4xl">🎉</div>
+                                <h4 class="text-xl font-bold text-white">Загадки решены!</h4>
+                                <p class="text-xs text-slate-300">Ваш результат: ${mathScore} из ${mathQuestions.length}</p>
+                                <button onclick="startMathRiddles()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-2 rounded-xl text-xs">Пройти снова</button>
+                            </div>
+                        `;
+                    }
+                };
+                optsEl.appendChild(btn);
+            });
+        }
+
+        // 3. ARMENIAN QUIZ (Учитель Нерсисян)
+        const armQuestions = [
+            { q: "Сколько букв в армянском алфавите, созданном Месропом Маштоцем?", opts: ["36", "38", "39", "33"], correct: 0 },
+            { q: "Как переводится слово «Բարև» (Барев)?", opts: ["Спасибо", "Здравствуйте / Привет", "До свидания", "Пожалуйста"], correct: 1 },
+            { q: "Что означает слово «Շնորհակալություն» (Шноракалутюн)?", opts: ["Пожалуйста", "Спасибо", "Доброе утро", "Друг"], correct: 1 },
+            { q: "Какая первая буква армянского алфавита?", opts: ["Բ (Бен)", "Գ (Гим)", "Ա (Айб)", "Դ (Да)"], correct: 2 }
+        ];
+        let armStep = 0, armScore = 0;
+
+        function startArmenianQuiz() {
+            armStep = 0; armScore = 0;
+            showArmQuestion();
+        }
+
+        function showArmQuestion() {
+            const q = armQuestions[armStep];
+            document.getElementById('arm-step-text').innerText = `Вопрос ${armStep + 1} из ${armQuestions.length}`;
+            document.getElementById('arm-score-text').innerText = `Очки: ${armScore}`;
+            document.getElementById('arm-question-text').innerText = q.q;
+
+            const optsEl = document.getElementById('arm-options');
+            optsEl.innerHTML = '';
+            q.opts.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-3 rounded-xl bg-slate-800 hover:bg-emerald-600 border border-slate-700 text-xs font-semibold text-slate-200 transition-all text-left";
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    if (idx === q.correct) armScore++;
+                    armStep++;
+                    if (armStep < armQuestions.length) showArmQuestion();
+                    else {
+                        document.getElementById('arm-game-body').innerHTML = `
+                            <div class="text-center py-6 space-y-3">
+                                <div class="text-4xl">🇦🇲</div>
+                                <h4 class="text-xl font-bold text-white">Молодец!</h4>
+                                <p class="text-xs text-slate-300">Правильных ответов: ${armScore} из ${armQuestions.length}</p>
+                                <button onclick="startArmenianQuiz()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-2 rounded-xl text-xs">Пройти еще раз</button>
+                            </div>
+                        `;
+                    }
+                };
+                optsEl.appendChild(btn);
+            });
+        }
+
+        // 4. TACTICAL ENGLISH ARENA
+        const engWords = [
+            { scrambled: "T - A - C - T - I - C - S", real: "TACTICS", hint: "Тактика и стратегия", opts: ["TACTICS", "TEACHER", "TRAINING", "TICKETS"] },
+            { scrambled: "V - I - C - T - O - R - Y", real: "VICTORY", hint: "Победа в соревновании", opts: ["VACATION", "VICTORY", "VILLAGE", "VOLUME"] },
+            { scrambled: "C - H - A - M - P - I - O - N", real: "CHAMPION", hint: "Победитель турнира", opts: ["CHALLENGE", "CHAMPION", "CHAPTER", "CHARACTER"] }
+        ];
+        let engStep = 0;
+
+        function startEnglishGame() {
+            engStep = 0;
+            showEnglishWord();
+        }
+
+        function showEnglishWord() {
+            const w = engWords[engStep];
+            document.getElementById('eng-scrambled').innerText = w.scrambled;
+            document.getElementById('eng-hint').innerText = `Подсказка: ${w.hint}`;
+
+            const optsEl = document.getElementById('eng-options');
+            optsEl.innerHTML = '';
+            w.opts.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "p-3 rounded-xl bg-slate-800 hover:bg-amber-600 border border-slate-700 text-xs font-bold text-slate-200 transition-all";
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    if (opt === w.real) {
+                        document.getElementById('eng-result').innerText = "✨ Правильно! Tactical Victory!";
+                        setTimeout(() => {
+                            engStep++;
+                            if (engStep < engWords.length) showEnglishWord();
+                            else {
+                                document.getElementById('eng-game-body').innerHTML = `
+                                    <div class="text-center py-6 space-y-3">
+                                        <div class="text-4xl">🏆</div>
+                                        <h4 class="text-xl font-bold text-white">English Tactics Master!</h4>
+                                        <p class="text-xs text-slate-300">Все слова разгаданы!</p>
+                                        <button onclick="startEnglishGame()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold px-6 py-2 rounded-xl text-xs">Заново</button>
+                                    </div>
+                                `;
+                            }
+                        }, 800);
+                    } else {
+                        document.getElementById('eng-result').innerText = "❌ Неверно, попробуй еще раз!";
+                    }
+                };
+                optsEl.appendChild(btn);
+            });
+        }
+
+        // 5. PE TACTICAL GAME (Татьяна Аркадьевна)
+        const peScenarios = [
+            {
+                q: "Сценарий 1: Противник прессингует в центре поля. Какую тактику выберем?",
+                opts: ["Быстрый пас на фланги", "Длинный удар вперед", "Глухая защита"],
+                correct: 0,
+                log: "Отличный пас на фланг! Команда выводится в атаку!"
+            },
+            {
+                q: "Сценарий 2: Финальные 2 минуты матча, счет 1:0 в нашу пользу!",
+                opts: ["Тактический контроль мяча", "Все в атакующую позицию", "Хаотичные удары"],
+                correct: 0,
+                log: "Тактический контроль мяча сохранен! Победа 5 «Д»!"
+            }
+        ];
+        let peStep = 0;
+
+        function startPEGame() {
+            peStep = 0;
+            showPEScenario();
+        }
+
+        function showPEScenario() {
+            const sc = peScenarios[peStep];
+            document.getElementById('pe-scenario-text').innerText = sc.q;
+            const optsEl = document.getElementById('pe-tactical-options');
+            optsEl.innerHTML = '';
+
+            sc.opts.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-3 rounded-xl bg-slate-800 hover:bg-red-600 border border-slate-700 text-xs font-bold text-slate-200 transition-all text-left";
+                btn.innerText = `Тактика #${idx + 1}: ${opt}`;
+                btn.onclick = () => {
+                    const logEl = document.getElementById('pe-log');
+                    logEl.classList.remove('hidden');
+                    logEl.innerText = sc.log;
+                    setTimeout(() => {
+                        peStep++;
+                        if (peStep < peScenarios.length) showPEScenario();
+                        else {
+                            document.getElementById('pe-modal').querySelector('.glass').innerHTML = `
+                                <div class="text-center py-6 space-y-3">
+                                    <div class="text-5xl">🥇</div>
+                                    <h3 class="text-xl font-bold text-white">Тактическая Победа!</h3>
+                                    <p class="text-xs text-slate-300">Тактика привела 5 «Д» к чемпионству!</p>
+                                    <button onclick="closeModal('pe-modal'); location.reload();" class="bg-red-600 hover:bg-red-500 text-white font-bold px-6 py-2 rounded-xl text-xs">Закрыть</button>
+                                </div>
+                            `;
+                        }
+                    }, 1200);
+                };
+                optsEl.appendChild(btn);
+            });
+        }
+
+        // 6. RUSSIAN QUIZ
+        function startRussianQuiz() {
+            const optsEl = document.getElementById('rus-options');
+            optsEl.innerHTML = '';
+            const options = ["А. С. Пушкин", "М. Ю. Лермонтов", "И. А. Крылов", "Н. В. Гоголь"];
+            options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-3 rounded-xl bg-slate-800 hover:bg-purple-600 border border-slate-700 text-xs font-bold text-slate-200 transition-all text-left";
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    if (idx === 0) {
+                        alert("Правильно! Это Александр Сергеевич Пушкин!");
+                        closeModal('russian-modal');
+                    } else {
+                        alert("Попробуй еще раз!");
+                    }
+                };
+                optsEl.appendChild(btn);
+            });
+        }
+
+        // Students List Data
         const students = [
-            { name: "Даня", role: "Ученик", status: "Я не начинаю я заканчиваю", avatar: "💻" },
-            { name: "Арина", role: "Ученик", status: "Ученица 5 «Д»", avatar: "🚀" },
-            { name: "Кира", role: "Ученик", status: "Горчицу знаешь? Я огорчил", avatar: "🐱" },
-            { name: "Анна", role: "Ученик", status: "Ученица 5 «Д»", avatar: "🌸" },
-            { name: "Арам", role: "Ученик", status: "Ученик 5 «Д»", avatar: "⚽" },
-            { name: "Асмик", role: "Ученик", status: "Ученица 5 «Д»", avatar: "🎨" },
-            { name: "Вивиен", role: "Ученик", status: "Ученица 5 «Д»", avatar: "✨" },
-            { name: "Гарик", role: "Ученик", status: "Ученик 5 «Д»", avatar: "🎮" },
-            { name: "Тигран Еритян", role: "Ученик", status: "Ученик 5 «Д»", avatar: "♟" },
-            { name: "Каталия", role: "Ученик", status: "Ученица 5 «Д»", avatar: "🌊" },
-            { name: "Лилит", role: "Ученик", status: "Ученица 5 «Д»", avatar: "⭐" },
-            { name: "Мария Переханян", role: "Ученик", status: "Ученица 5 «Д»", avatar: "📖" },
-            { name: "Рафаель", role: "Ученик", status: "Ученик 5 «Д»", avatar: "🎯" },
-            { name: "Рузанна", role: "Ученик", status: "Ученица 5 «Д»", avatar: "🎧" },
-            { name: "Софа", role: "Ученик", status: "Ученица 5 «Д»", avatar: "💫" },
-            { name: "София", role: "Ученик", status: "Ученица 5 «Д»", avatar: "🌺" },
-            { name: "~Pro (Гурджинян Марк)", role: "Ученик", status: "+374 44 220217", avatar: "⚡" },
-            { name: "Карен", role: "Ученик", status: "Ученик 5 «Д»", avatar: "🏆" },
-            { name: "Элина", role: "Ученик", status: "Ученица 5 «Д»", avatar: "🦋" },
-            { name: "Алекс", role: "Ученик", status: "Ученик 5 «Д»", avatar: "🛹" },
-            { name: "David", role: "Ученик", status: "Ученик 5 «Д»", avatar: "🔥" },
-            { name: "Артур", role: "Ученик", status: "Ученик 5 «Д»", avatar: "🦁" },
-            { name: "Микаэль", role: "Ученик", status: "Ученик 5 «Д»", avatar: "🏀" }
+            { name: "Даня", role: "Ученик 5 «Д»", status: "Я не начинаю я заканчиваю", avatar: "💻" },
+            { name: "Арина", role: "Ученик 5 «Д»", status: "Ученица 5 «Д»", avatar: "🚀" },
+            { name: "Кира", role: "Ученик 5 «Д»", status: "Горчицу знаешь? Я огорчил", avatar: "🐱" },
+            { name: "Анна", role: "Ученик 5 «Д»", status: "Ученица 5 «Д»", avatar: "🌸" },
+            { name: "Арам", role: "Ученик 5 «Д»", status: "Ученик 5 «Д»", avatar: "⚽" },
+            { name: "Асмик", role: "Ученик 5 «Д»", status: "Ученица 5 «Д»", avatar: "🎨" },
+            { name: "Вивиен", role: "Ученик 5 «Д»", status: "Ученица 5 «Д»", avatar: "✨" },
+            { name: "Гарик", role: "Ученик 5 «Д»", status: "Ученик 5 «Д»", avatar: "🎮" },
+            { name: "Тигран Еритян", role: "Ученик 5 «Д»", status: "Ученик 5 «Д»", avatar: "♟" },
+            { name: "Каталия", role: "Ученик 5 «Д»", status: "Ученица 5 «Д»", avatar: "🌊" },
+            { name: "Лилит", role: "Ученик 5 «Д»", status: "Ученица 5 «Д»", avatar: "⭐" },
+            { name: "Мария Переханян", role: "Ученик 5 «Д»", status: "Ученица 5 «Д»", avatar: "📖" },
+            { name: "Рафаель", role: "Ученик 5 «Д»", status: "Ученик 5 «Д»", avatar: "🎯" },
+            { name: "Рузанна", role: "Ученик 5 «Д»", status: "Ученица 5 «Д»", avatar: "🎧" },
+            { name: "Софа", role: "Ученик 5 «Д»", status: "Ученица 5 «Д»", avatar: "💫" },
+            { name: "София", role: "Ученик 5 «Д»", status: "Ученица 5 «Д»", avatar: "🌺" },
+            { name: "~Pro (Гурджинян Марк)", role: "Ученик 5 «Д»", status: "+374 44 220217", avatar: "⚡" },
+            { name: "Карен", role: "Ученик 5 «Д»", status: "Ученик 5 «Д»", avatar: "🏆" },
+            { name: "Элина", role: "Ученик 5 «Д»", status: "Ученица 5 «Д»", avatar: "🦋" },
+            { name: "Алекс", role: "Ученик 5 «Д»", status: "Ученик 5 «Д»", avatar: "🛹" },
+            { name: "David", role: "Ученик 5 «Д»", status: "Ученик 5 «Д»", avatar: "🔥" },
+            { name: "Артур", role: "Ученик 5 «Д»", status: "Ученик 5 «Д»", avatar: "🦁" },
+            { name: "Микаэль", role: "Ученик 5 «Д»", status: "Ученик 5 «Д»", avatar: "🏀" }
         ];
 
-        // Render Students
         function renderStudents(filter = '') {
             const grid = document.getElementById('students-grid');
+            if (!grid) return;
             grid.innerHTML = '';
             const filtered = students.filter(s => s.name.toLowerCase().includes(filter.toLowerCase()));
 
             filtered.forEach(s => {
                 const card = document.createElement('div');
                 card.className = "glass p-4 rounded-xl border border-slate-800 flex items-center gap-3 hover:border-slate-700 transition-all";
-                const badgeClass = s.isAdmin ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : (s.isUser ? 'bg-brand-500/20 text-brand-400 border-brand-500/30' : 'bg-slate-800 text-slate-400 border-slate-700');
-
                 card.innerHTML = `
                     <div class="w-10 h-10 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-lg shrink-0">
                         ${s.avatar}
@@ -395,7 +1116,7 @@
                     <div class="min-w-0 flex-1">
                         <h4 class="font-bold text-sm text-white truncate">${s.name}</h4>
                         <p class="text-xs text-slate-400 truncate italic">${s.status}</p>
-                        <span class="inline-block mt-1 px-2 py-0.5 text-[10px] font-medium rounded border ${badgeClass}">
+                        <span class="inline-block mt-1 px-2 py-0.5 text-[10px] font-medium rounded border bg-slate-800 text-emerald-400 border-slate-700">
                             ${s.role}
                         </span>
                     </div>
@@ -404,7 +1125,7 @@
             });
         }
 
-        // Schedule Data
+        // Schedule Data (5th Grade)
         const scheduleData = {
             mon: [
                 { num: 1, subject: "Армянский язык", teacher: "Учитель Нерсисян" },
@@ -417,7 +1138,7 @@
             tue: [
                 { num: 1, subject: "Математика", teacher: "Анна Львовна" },
                 { num: 2, subject: "История", teacher: "Учитель истории" },
-                { num: 3, subject: "Природа", teacher: "Учитель естествознания" },
+                { num: 3, subject: "Природа (Естествознание)", teacher: "Учитель естествознания" },
                 { num: 4, subject: "Русский язык", teacher: "Герсилия Александровна" },
                 { num: 5, subject: "Информатика", teacher: "Преподаватель информатики" },
                 { num: 6, subject: "Русская литература", teacher: "Герсилия Александровна" }
@@ -433,7 +1154,7 @@
             thu: [
                 { num: 1, subject: "Технология", teacher: "Преподаватель технологии" },
                 { num: 2, subject: "Армянский язык", teacher: "Учитель Нерсисян" },
-                { num: 3, subject: "Природа", teacher: "Учитель естествознания" },
+                { num: 3, subject: "Природа (Естествознание)", teacher: "Учитель естествознания" },
                 { num: 4, subject: "Математика", teacher: "Анна Львовна" },
                 { num: 5, subject: "История", teacher: "Учитель истории" },
                 { num: 6, subject: "Русская литература", teacher: "Герсилия Александровна" }
@@ -444,12 +1165,12 @@
                 { num: 3, subject: "Армянский язык", teacher: "Учитель Нерсисян" },
                 { num: 4, subject: "Математика", teacher: "Анна Львовна" },
                 { num: 5, subject: "Технология", teacher: "Учитель Нерсисян" }
-				
             ]
         };
 
         function renderSchedule(day) {
             const container = document.getElementById('schedule-container');
+            if (!container) return;
             container.innerHTML = '';
 
             (scheduleData[day] || []).forEach(item => {
@@ -473,15 +1194,15 @@
             });
         }
 
-        // Quiz Logic
+        // Main Quiz Logic
         const quizQuestions = [
             {
                 q: "Кто является классным руководителем 5 «Д»?",
-                options: ["Анна Львовна", "Ынкер Хачикян", "Герсилия Александровна", "Татьяна Аркадьевна"],
+                options: ["Анна Львовна", "Нвард Геворковна / Ынкер Хачикян", "Герсилия Александровна", "Татьяна Аркадьевна"],
                 correct: 1
             },
             {
-                q: "Кто преподает математику в нашем классе?",
+                q: "Кто преподает математику в 5 «Д»?",
                 options: ["Анна Львовна", "Miss Энн", "Учитель Нерсисян", "Татьяна Аркадьевна"],
                 correct: 0
             },
@@ -491,7 +1212,7 @@
                 correct: 1
             },
             {
-                q: "Кто преподает армянский язык в 5 «Д»?",
+                q: "Кто преподает армянский язык?",
                 options: ["Татьяна Аркадьевна", "Учитель Нерсисян", "Анна Львовна", "Miss Энн"],
                 correct: 1
             }
@@ -535,10 +1256,19 @@
             }
         }
 
-        // Init
+        // Init App
         document.addEventListener('DOMContentLoaded', () => {
             renderStudents();
             renderSchedule('mon');
+
+            // Mobile menu toggle
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileBtn && mobileMenu) {
+                mobileBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
 
             // Search
             document.getElementById('student-search').addEventListener('input', (e) => renderStudents(e.target.value));
@@ -550,45 +1280,29 @@
                         b.classList.remove('bg-brand-600', 'text-white');
                         b.classList.add('text-slate-400');
                     });
-                    const target = e.currentTarget;
-                    target.classList.add('bg-brand-600', 'text-white');
-                    target.classList.remove('text-slate-400');
-                    renderSchedule(target.dataset.day);
+                    const targetBtn = e.target;
+                    targetBtn.classList.add('bg-brand-600', 'text-white');
+                    targetBtn.classList.remove('text-slate-400');
+                    renderSchedule(targetBtn.dataset.day);
                 });
             });
 
-            // Mobile Menu Toggle
-            const mobileBtn = document.getElementById('mobile-menu-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            if (mobileBtn && mobileMenu) {
-                mobileBtn.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
-            }
+            // Start Quiz
+            document.getElementById('start-quiz-btn').addEventListener('click', () => {
+                document.getElementById('quiz-intro').classList.add('hidden');
+                document.getElementById('quiz-game').classList.remove('hidden');
+                currentQuestion = 0;
+                score = 0;
+                loadQuizQuestion();
+            });
 
-            // Quiz Controls
-            const startQuizBtn = document.getElementById('start-quiz-btn');
-            const restartQuizBtn = document.getElementById('restart-quiz-btn');
-
-            if (startQuizBtn) {
-                startQuizBtn.addEventListener('click', () => {
-                    document.getElementById('quiz-intro').classList.add('hidden');
-                    document.getElementById('quiz-game').classList.remove('hidden');
-                    currentQuestion = 0;
-                    score = 0;
-                    loadQuizQuestion();
-                });
-            }
-
-            if (restartQuizBtn) {
-                restartQuizBtn.addEventListener('click', () => {
-                    document.getElementById('quiz-result').classList.add('hidden');
-                    document.getElementById('quiz-game').classList.remove('hidden');
-                    currentQuestion = 0;
-                    score = 0;
-                    loadQuizQuestion();
-                });
-            }
+            document.getElementById('restart-quiz-btn').addEventListener('click', () => {
+                document.getElementById('quiz-result').classList.add('hidden');
+                document.getElementById('quiz-game').classList.remove('hidden');
+                currentQuestion = 0;
+                score = 0;
+                loadQuizQuestion();
+            });
         });
     </script>
 </body>
